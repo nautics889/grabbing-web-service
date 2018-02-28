@@ -1,6 +1,8 @@
 import cgi
 import sqlite3
 
+from htmlscrabbing import LinkHTMLParser
+
 class SQLighter:
 
     def __init__(self, db):
@@ -11,10 +13,9 @@ class SQLighter:
         with self.connection:
             return self.cursor.execute("SELECT * FROM links").fetchall()
 
-    def add_row(self, content):
+    def add_row(self, link,):
         with self.connection:
-            print(content)
-            self.cursor.execute('INSERT INTO links VALUES (?)', (content,))
+            self.cursor.execute('INSERT INTO links VALUES (?)', (link,))
             print("successful added")
 
     def close(self):
@@ -23,9 +24,14 @@ class SQLighter:
 form = cgi.FieldStorage()
 link = form.getfirst("get_link", "none")
 
+lp = LinkHTMLParser(link)
 
 print("Content-type: text/html\n")
 print("hello")
+
+print(lp.get_links())
+
+lp.__del__()
 
 print(link)
 
