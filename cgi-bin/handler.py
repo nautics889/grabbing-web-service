@@ -3,6 +3,7 @@ import sqlite3
 
 from htmlscrabbing import LinkHTMLParser
 
+'''Подключение к БД'''
 class SQLighter:
 
     def __init__(self, db):
@@ -13,14 +14,15 @@ class SQLighter:
         with self.connection:
             return self.cursor.execute("SELECT * FROM links").fetchall()
 
-    def add_row(self, link,):
+    def add_row(self, link, content):
         with self.connection:
-            self.cursor.execute('INSERT INTO links VALUES (?)', (link,))
+            self.cursor.execute('INSERT INTO links VALUES (?, ?)', (link, content))
             print("successful added")
 
     def close(self):
         self.connection.close()
 
+'''Обработка строк'''
 form = cgi.FieldStorage()
 link = form.getfirst("get_link", "none")
 
@@ -31,7 +33,7 @@ print("hello")
 
 print(lp.get_links())
 
-lp.__del__()
+
 
 print(link)
 
@@ -39,7 +41,8 @@ print("continue")
 
 db_obj = SQLighter("links.db")
 print(link)
-db_obj.add_row(link)
+db_obj.add_row(link, lp.get_links())
+lp.__del__()
 db_obj.close()
 
 print("end")
