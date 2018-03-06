@@ -26,6 +26,9 @@ class SQLighter:
 form = cgi.FieldStorage()
 link = form.getfirst("get_link", "none")
 
+print(link)
+link = 'https://soundcloud.com/ecstaticrecordings/b1-protect-the-revolution'
+
 lp = LinkHTMLParser(link)
 
 print("Content-type: text/html\n")
@@ -41,7 +44,7 @@ print("continue")
 
 db_obj = SQLighter("links.db")
 print(link)
-db_obj.add_row(link, lp.get_links())
+#db_obj.add_row(link, lp.get_links())
 lp.__del__()
 db_obj.close()
 

@@ -2,12 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Scrapping</title>
+	<title>Grabbing</title>
+	<script
+  		src="https://code.jquery.com/jquery-1.12.4.js"
+  		integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  		crossorigin="anonymous">
+  	</script>
 </head>
 <body>
-	<form action="/cgi-bin/handler.py">
+	<form method="POST" id="links_form" action="javascript:void(null)" onsubmit="call()">
 		<input type="text" name="get_link">
 		<input type="submit">
 	</form>
+	<div id="results">вывод</div>
+	<script src="ajax_pusher.js"></script>
 </body>
 </html>

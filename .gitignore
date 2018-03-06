@@ -1,3 +1,4 @@
 .idea/
+__pycache__/
 links.db
 cgi-bin/links.db
