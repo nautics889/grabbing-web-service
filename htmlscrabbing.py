@@ -45,8 +45,8 @@ class LinkHTMLParser(HTMLParser):
         return str(urlopen(self.site_name).read())
 
     def get_links(self):
-        return '\n'.join(sorted(self.links))
-
+        self.links = ['q', 'w', 'e']
+        return 'O'.join(sorted(self.links))
 
     def __del__(self):
         pass

@@ -3,24 +3,23 @@ from urllib.request import urlopen
 
 class LinkHTMLParser(HTMLParser):
     def __init__(self, site_name, *args, **kwargs):
-        # список ссылок
+        # создание списка ссылок
         self.links = []
-        # имя сайта
+        # инициализация имени сайта
         self.site_name = site_name
-        # вызываем __init__ родителя
+        # вызыв конктруктора родителя
         super().__init__(*args, **kwargs)
-        # при инициализации "скармливаем" парсеру содержимое страницы
+        # считывание контента веб-страницы
         self.feed(self.read_site_content())
 
     def handle_starttag(self, tag, attrs):
-        # проверяем является ли тэг тэгом ссылки
+        # проверка является ли тэг тэгом ссылки
         if tag == 'a':
-            # находим аттрибут адреса ссылки
+            # поиск атрибута адреса ссылки
             for attr in attrs:
                 if attr[0] == 'href':
-                    # проверяем эту ссылку методом validate() (мы его еще напишем)
                     if not self.validate(attr[0]):
-                        # вставляем адрес в список ссылок
+                        # добавление в список ссылок
                         if self.validate_link(attr[1]):
                             self.links.append(attr[1])
 
@@ -36,17 +35,24 @@ class LinkHTMLParser(HTMLParser):
         return link in self.links or '#' in link or 'javascript:' in link
 
     def validate_link(self, link):
+        """
+        Дополнительная валидация:
+        ссылка будет добавлена, если она начинается с http.
+        Это позволяет избавится от локальных ссылок
+        """
         if link[:4]=='http':
             return True
         else:
             False
 
+    # считывание контента
     def read_site_content(self):
         return str(urlopen(self.site_name).read())
 
+    # метод для получения готового списка
     def get_links(self):
-        return '\n'.join(sorted(self.links))
+        return '<br>'.join(sorted(self.links))
 
-
+    # деструктор объекта
     def __del__(self):
         pass

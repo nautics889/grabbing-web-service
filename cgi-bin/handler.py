@@ -1,7 +1,7 @@
 import cgi
 import sqlite3
 
-from htmlscrabbing import LinkHTMLParser
+from htmlgrabbing import LinkHTMLParser
 
 '''Подключение к БД'''
 class SQLighter:
@@ -27,7 +27,6 @@ form = cgi.FieldStorage()
 link = form.getfirst("get_link", "none")
 
 print(link)
-link = 'https://soundcloud.com/ecstaticrecordings/b1-protect-the-revolution'
 
 lp = LinkHTMLParser(link)
 
@@ -36,16 +35,19 @@ print("hello")
 
 print(lp.get_links())
 
-
+with open('output.txt', 'w') as f:
+    f.write(lp.get_links())
 
 print(link)
 
 print("continue")
 
 db_obj = SQLighter("links.db")
-print(link)
-#db_obj.add_row(link, lp.get_links())
-lp.__del__()
+
+db_obj.add_row(link, lp.get_links())
+
 db_obj.close()
+
+lp.__del__()
 
 print("end")
