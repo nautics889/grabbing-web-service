@@ -1,0 +1,65 @@
+@font-face {
+    font-family: Timeburner;
+    src: url(timeburnernormal.ttf);
+}
+
+.wrapper {
+	
+}
+.head {
+	text-align: center;
+	font-family: Timeburner;
+	margin-bottom: 50px;
+}
+.description {
+	padding: 0 20%; 
+	margin-bottom: 30px;
+}
+.description span {
+	font-family: Helvetica;
+	opacity: 0.6;
+}
+.wrapper_form {
+	padding: 0 20%; 
+}
+.head {
+	width: 100%;
+}
+form {
+	width: 100%;
+
+	display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+#results {
+	width: 100%;
+	background: #dedede;
+	width: 70%;
+	margin: 30px 15%;
+}
+#results span {
+	padding: 20px;
+	font-family: Helvetica;
+	font-size: 2em;
+	opacity: 0.4;
+}
+.button {
+	border-radius: 50%;
+	margin-bottom: : 10px;
+	font-size: 1em;
+	height: 45px;
+	width: 125px;
+}
+input[type="text"] {
+	background: #E9EFF6;
+	border-radius: 20px;
+	padding-left: 20px;
+	width: 40%;
+	height: 35px;
+	font-size: 1em;
+}

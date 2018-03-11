@@ -34,6 +34,7 @@ class WebHTMLParser(HTMLParser):
                             self.links.append(attr[1])
 
     def get_phones(self):
+        # поиск и возвращение телефонных номеров
         self.numbers = self.numbersRegex.findall(self.read_site_content())
         if (len(self.numbers)!=0):
             return '<br>'.join(sorted(set(self.numbers)))
@@ -41,6 +42,7 @@ class WebHTMLParser(HTMLParser):
             return 'No numbers was found.'
 
     def get_mails(self):
+        # поиск и возвращение электронных почт
         self.mails = self.mailsRegex.findall(self.read_site_content())
         if (len(self.mails)!=0):
             return '<br>'.join(sorted(set(self.mails)))
@@ -73,8 +75,8 @@ class WebHTMLParser(HTMLParser):
     def read_site_content(self):
         return str(urlopen(self.site_name).read())
 
-    # метод для получения готового списка
     def get_links(self):
+        # получение списка ссылок
         if (len(self.links)!=0):
             return '<br>'.join(sorted(self.links))
         else:

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Grabbing</title>
+	<title>Scrap LNEM</title>
+	<link rel="stylesheet" href="css\style.css">
 	<script
   		src="https://code.jquery.com/jquery-1.12.4.js"
   		integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
@@ -10,29 +11,25 @@
   	</script>
 </head>
 <body>
-	<form method="POST" id="links_form" action="javascript:void(null)">
-		<input type="text" name="get_link">
-		<input type="button" value="Ссылки" onclick="call_links()">
-		<input type="button" value="Номера" onclick="call_numbers()">
-		<input type="button" value="Почта" onclick="call_mails()">
-	</form>
-	<div id="results">вывод</div>
+	<div class="wrapper">
+		<div class="head">
+			<h1>Tiny LNEM-scraper</h1>
+		</div>
+		<div class="description">
+			<span>Here your can get all the links, phone numbers and e-mail addresses from web-page. Please, enter URL of the page with HTTP header (http(s)://www.example.com). At present only ukrainian numbers supported for grabbing.</span>
+		</div>
+		<div class="wrapper_form">
+			<form method="POST" id="links_form" action="javascript:void(null)">
+				<input type="text" name="get_link" placeholder="Enter an address...">
+				<input type="button" value="Get links" onclick="call_links()" class="button">
+				<input type="button" value="Get numbers" onclick="call_numbers()" class="button">
+				<input type="button" value="Get e-mails" onclick="call_mails()" class="button">
+			</form>
+		</div>
+		<div id="results">
+			<span>Output</span>
+		</div>
+	</div>
 	<script src="ajax_pusher.js"></script>
-	<script>
-		function call_mails() {
-	var msg = $('#links_form').serialize();
-	$.ajax({
-		type: 'POST',
-		url: '/cgi-bin/handler_emails.py',
-		data: msg,
-		success: function(data) {
-			$('#results').html(data);
-		},
-		error: function(xhr, str) {
-			alert('Возникла ошибка: ' + xhr.responseCode);
-		}
-	});
-}
-	</script>
 </body>
 </html>

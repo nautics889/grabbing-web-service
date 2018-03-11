@@ -7,15 +7,22 @@ from databaseconnector import SQLighter
 form = cgi.FieldStorage()
 link = form.getfirst("get_link", "none")
 
-lp = WebHTMLParser(link)
+try:
+    # создание экземпляра класса-парсера
+    lp = WebHTMLParser(link)
 
-print("Content-type: text/html\n")
-print(lp.get_links())
+    print("Content-type: text/html\n")
+    print(lp.get_links())
 
-db_obj = SQLighter("links.db")
+    # подключение к БД и добавление результата
+    db_obj = SQLighter("links.db")
 
-db_obj.add_row_links(link, lp.get_links())
+    db_obj.add_row_links(link, lp.get_links())
 
-db_obj.close()
+    db_obj.close()
 
-lp.__del__()
+    # удаление экзмляра класса-парсера
+    lp.__del__()
+except:
+    print("Content-type: text/html\n")
+    print('Forbidden.')
