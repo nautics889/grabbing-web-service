@@ -10,11 +10,29 @@
   	</script>
 </head>
 <body>
-	<form method="POST" id="links_form" action="javascript:void(null)" onsubmit="call()">
+	<form method="POST" id="links_form" action="javascript:void(null)">
 		<input type="text" name="get_link">
-		<input type="submit">
+		<input type="button" value="Ссылки" onclick="call_links()">
+		<input type="button" value="Номера" onclick="call_numbers()">
+		<input type="button" value="Почта" onclick="call_mails()">
 	</form>
 	<div id="results">вывод</div>
 	<script src="ajax_pusher.js"></script>
+	<script>
+		function call_mails() {
+	var msg = $('#links_form').serialize();
+	$.ajax({
+		type: 'POST',
+		url: '/cgi-bin/handler_emails.py',
+		data: msg,
+		success: function(data) {
+			$('#results').html(data);
+		},
+		error: function(xhr, str) {
+			alert('Возникла ошибка: ' + xhr.responseCode);
+		}
+	});
+}
+	</script>
 </body>
 </html>

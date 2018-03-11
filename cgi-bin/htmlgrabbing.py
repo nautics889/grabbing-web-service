@@ -1,10 +1,20 @@
 from html.parser import HTMLParser
 from urllib.request import urlopen
 
-class LinkHTMLParser(HTMLParser):
+import re
+
+class WebHTMLParser(HTMLParser):
     def __init__(self, site_name, *args, **kwargs):
         # создание списка ссылок
         self.links = []
+        # создание списка телефонных номеров
+        self.numbers = []
+        # регулярное выражение для поиска телефонных номеров
+        self.numbersRegex = re.compile(r'\+38\s?\(\d{3}\)\s?\d{3}-?\d{2}-?\d{2}')
+        # создание списка e-mail адресов
+        self.mails = []
+        # регулярное выражение для поиска почтовых адресов
+        self.mailsRegex = re.compile(r'[-.\w]+@(?:[a-z\d]{2,}\.)+[a-z]{2,6}')
         # инициализация имени сайта
         self.site_name = site_name
         # вызыв конктруктора родителя
@@ -22,6 +32,20 @@ class LinkHTMLParser(HTMLParser):
                         # добавление в список ссылок
                         if self.validate_link(attr[1]):
                             self.links.append(attr[1])
+
+    def get_phones(self):
+        self.numbers = self.numbersRegex.findall(self.read_site_content())
+        if (len(self.numbers)!=0):
+            return '<br>'.join(sorted(set(self.numbers)))
+        else:
+            return 'No numbers was found.'
+
+    def get_mails(self):
+        self.mails = self.mailsRegex.findall(self.read_site_content())
+        if (len(self.mails)!=0):
+            return '<br>'.join(sorted(set(self.mails)))
+        else:
+            return 'No e-mails was found.'
 
     def validate(self, link):
         """ Функция проверяет стоит ли добавлять ссылку в список адресов.
@@ -51,7 +75,10 @@ class LinkHTMLParser(HTMLParser):
 
     # метод для получения готового списка
     def get_links(self):
-        return '<br>'.join(sorted(self.links))
+        if (len(self.links)!=0):
+            return '<br>'.join(sorted(self.links))
+        else:
+            return 'No links was found.'
 
     # деструктор объекта
     def __del__(self):
